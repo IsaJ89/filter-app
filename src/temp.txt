@@ -1,0 +1,88 @@
+// incomplete
+
+import React, {Component} from 'react';
+
+class Checkbox extends Component {
+    state = {
+        checked:0,
+        name: this.props.name
+    }
+
+    onCheckChange(event) {
+
+        // get the state of the checkbox after change
+        let currentState = event.target.checked;
+
+        // get the brand name
+        let brandName = this.state.name;
+
+        console.log(`event.target.checked is ${currentState}`)
+        
+        if(currentState){
+            console.log(`event.target.checked has been found to be true...`)
+            this.setState({
+                ...this.state,
+                checked: 1
+            }, () => {
+                console.log(`state is ${JSON.stringify(this.state)}`)
+            })
+        }
+        else {
+            console.log(`event.target.checked has been found to be false...`)
+            this.setState( {
+                ...this.state,
+                checked: 0,
+            }, () => {
+                console.log(`state is ${JSON.stringify(this.state)}`)
+            })
+        }
+    
+        
+        this.props.onCheck(currentState, brandName);
+    
+    
+    }
+
+
+    render() {
+        return(
+            <div>
+                <div className='form-check' key={this.props.index}>
+                    <input onChange={this.onCheckChange.bind(this)} checked={this.state.checked} className='form-check-input' type='checkbox'></input>
+                    <label className='form-check-label'>{this.props.name}</label>
+                </div>
+            </div>            
+        )
+    }
+}
+
+export default Checkbox;
+
+
+
+################################################################################################
+app.js:
+// Fetch the selected brands array
+        let finalListOfSelectedBrands = [...this.state.selectedBrands]
+        console.log(`Final list of selected brands is ${JSON.stringify(finalListOfSelectedBrands)}`)
+
+        // Fetch the filter array
+        let newFilteredArray = [...this.state.filter]
+
+        
+        if(finalListOfSelectedBrands.length !== 0){
+            console.log(`we have a list of selected brands...`)
+            newFilteredArray = newFilteredArray.filter((brand) => {
+                return finalListOfSelectedBrands.includes(brand.brand)
+            })
+        
+            this.setState({
+                ...this.state,
+                filter: newFilteredArray
+            })
+        }
+        
+        console.log(`the final filter array is ${JSON.stringify(this.state.filter)}`)
+
+################################################################################################
+    
